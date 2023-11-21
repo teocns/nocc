@@ -93,7 +93,8 @@ func (cxxLauncher *CxxLauncher) GetNonZeroExitCodeCount() int64 {
 }
 
 func (cxxLauncher *CxxLauncher) launchServerCxxForCpp(session *Session, noccServer *NoccServer) {
-	cxxCommand := exec.Command(session.cxxName, session.cxxCmdLine...)
+	cxxBaseName := path.Base(session.cxxName)
+	cxxCommand := exec.Command(cxxBaseName, session.cxxCmdLine...)
 	cxxCommand.Dir = session.cxxCwd
 	var cxxStdout, cxxStderr bytes.Buffer
 	cxxCommand.Stderr = &cxxStderr
@@ -130,7 +131,8 @@ func (cxxLauncher *CxxLauncher) launchServerCxxForCpp(session *Session, noccServ
 }
 
 func (cxxLauncher *CxxLauncher) launchServerCxxForPch(cxxName string, cxxCmdLine []string, rootDir string, noccServer *NoccServer) error {
-	cxxCommand := exec.Command(cxxName, cxxCmdLine...)
+	cxxBaseName := path.Base(cxxName)
+	cxxCommand := exec.Command(cxxBaseName, cxxCmdLine...)
 	cxxCommand.Dir = rootDir
 	var cxxStdout, cxxStderr bytes.Buffer
 	cxxCommand.Stderr = &cxxStderr
