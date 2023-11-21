@@ -143,13 +143,9 @@ func ParseCmdLineInvocation(daemon *Daemon, cwd string, cmdLine []string) (invoc
 				return
 			} else if arg == "-isysroot" {
 				// an exception for local development when "remote" is also local, but generally unsupported yet
-				if len(daemon.remoteConnections) == 1 && daemon.remoteConnections[0].remoteHost == "127.0.0.1" {
-					invocation.cxxArgs = append(invocation.cxxArgs, arg, cmdLine[i+1])
-					i++
-					continue
-				}
-				invocation.err = fmt.Errorf("unsupported option: %s", arg)
-				return
+				invocation.cxxArgs = append(invocation.cxxArgs, arg, cmdLine[i+1])
+				i++
+				continue
 			} else if arg == "-Xarch_arm64" {
 				// todo if it's placed before -include, it should remain before it after cmd line reconstruction; for now, skip
 				continue
